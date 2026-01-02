@@ -1,13 +1,11 @@
-package com.jspiders.taskapi.data;
+package com.jspiders.taskapi.data.tasks;
 
 import lombok.Data;
 
 @Data
-public class Task {
+public class UpdateTaskRequest {
     private Long taskId;
     private String title;
     private String description;
     private String status;
-    private String createdAt;
-    private String updatedAt;
 }
