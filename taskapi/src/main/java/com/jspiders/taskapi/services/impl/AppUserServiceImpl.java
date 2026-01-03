@@ -16,6 +16,10 @@ public class AppUserServiceImpl implements AppUserService
     @Override
     public ResponseEntity<String> createUser(CreateUserRequest createUserRequest)
     {
+        System.out.println("this is AppUserServiceImpl --> createUser()");
+
+        //logics
+
         return null;
     }
 

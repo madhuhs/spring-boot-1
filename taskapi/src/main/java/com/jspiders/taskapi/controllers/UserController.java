@@ -18,4 +18,12 @@ public class UserController
     {
         this.appUserService = appUserService;
     }
+
+    @PostMapping
+    public ResponseEntity<String> addUser(@RequestBody CreateUserRequest createUserRequest)
+    {
+        System.out.println("this is UserController --> addUser()");
+        ResponseEntity<String> response = appUserService.createUser(createUserRequest);
+        return response;
+    }
 }
