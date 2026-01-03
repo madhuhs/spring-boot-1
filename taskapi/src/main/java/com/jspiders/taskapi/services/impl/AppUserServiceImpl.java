@@ -3,6 +3,7 @@ package com.jspiders.taskapi.services.impl;
 import com.jspiders.taskapi.data.users.AppUser;
 import com.jspiders.taskapi.data.users.CreateUserRequest;
 import com.jspiders.taskapi.services.AppUserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -20,26 +21,54 @@ public class AppUserServiceImpl implements AppUserService
 
         //logics
 
-        return null;
+//        ResponseEntity<String> response = ResponseEntity.ok("User created ");
+//        return response;
+         return ResponseEntity
+                 .status(HttpStatus.CREATED)
+                 .body("User created");
     }
 
     @Override
     public ResponseEntity<String> updateUser() {
-        return null;
+        System.out.println("this is AppUserServiceImpl --> updateUser()");
+
+        //logics
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("User updated");
     }
 
     @Override
-    public ResponseEntity<String> deleteUser(String email, String mobile, String password) {
-        return null;
+    public ResponseEntity<String> deleteUser(String email, String mobile, String password)
+    {
+        System.out.println("this is AppUserServiceImpl --> deleteUser()");
+
+        //logics
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("User deleted");
     }
 
     @Override
-    public ResponseEntity<List<AppUser>> getAllUsers() {
-        return null;
+    public ResponseEntity<List<AppUser>> getAllUsers()
+    {
+        System.out.println("this is AppUserServiceImpl --> getAllUsers()");
+
+        //logics
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(null);
     }
 
     @Override
-    public ResponseEntity<AppUser> getUserById(Long userId) {
-        return null;
+    public ResponseEntity<AppUser> getUserById(Long userId)
+    {
+        System.out.println("this is AppUserServiceImpl --> getUserById()");
+
+        //logics
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(null);
     }
 }
