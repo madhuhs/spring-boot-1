@@ -1,4 +1,21 @@
 package com.jspiders.taskapi.controllers;
 
-public class UserController {
+import com.jspiders.taskapi.data.users.CreateUserRequest;
+import com.jspiders.taskapi.services.AppUserService;
+import com.jspiders.taskapi.services.impl.AppUserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/v1/users")
+public class UserController
+{
+    //immutable
+    private final AppUserService appUserService;
+    @Autowired
+    public UserController(AppUserService appUserService)
+    {
+        this.appUserService = appUserService;
+    }
 }
