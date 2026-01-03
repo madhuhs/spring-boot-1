@@ -50,8 +50,8 @@ public class UserController
         ResponseEntity<List<AppUser>> response = appUserService.getAllUsers();
         return response;
     }
-    @GetMapping
-    ResponseEntity<AppUser> getUserById(Long userId){
+    @GetMapping("/{userId}")
+    ResponseEntity<AppUser> getUserById(@PathVariable Long userId){
         System.out.println("this is UserController --> getUserById()");
         ResponseEntity<AppUser> response = appUserService.getUserById(userId);
         return response;
