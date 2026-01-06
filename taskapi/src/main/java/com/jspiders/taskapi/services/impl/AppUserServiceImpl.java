@@ -2,6 +2,7 @@ package com.jspiders.taskapi.services.impl;
 
 import com.jspiders.taskapi.data.users.AppUser;
 import com.jspiders.taskapi.data.users.CreateUserRequest;
+import com.jspiders.taskapi.errors.InvalidNameException;
 import com.jspiders.taskapi.services.AppUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,15 @@ public class AppUserServiceImpl implements AppUserService
     {
         System.out.println("this is AppUserServiceImpl --> createUser()");
 
+        System.out.println("name : "+createUserRequest.getName());
+
+        //validate
+         validateName(createUserRequest);
+         validateEmail(createUserRequest);
         //logics
+
+        //save data to database
+
 
 //        ResponseEntity<String> response = ResponseEntity.ok("User created ");
 //        return response;
@@ -70,5 +79,31 @@ public class AppUserServiceImpl implements AppUserService
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(null);
+    }
+
+    private void validateName(CreateUserRequest createUserRequest)
+    {
+        //Validation
+        if(createUserRequest.getName() != null && createUserRequest.getName().length()<3)
+        {
+//            IllegalArgumentException ex = new IllegalArgumentException();
+//            throw ex;
+
+            InvalidNameException ex = new InvalidNameException("Invalid Name");
+            throw ex;
+        }
+    }
+
+    private void validateEmail(CreateUserRequest createUserRequest)
+    {
+        //Validation
+        if(createUserRequest.getEmail() != null && createUserRequest.getEmail().length()<8)
+        {
+//            IllegalArgumentException ex = new IllegalArgumentException();
+//            throw ex;
+
+            InvalidNameException ex = new InvalidNameException("Invalid Name");
+            throw ex;
+        }
     }
 }
