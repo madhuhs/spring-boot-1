@@ -6,7 +6,6 @@ import com.jspiders.taskapi.errors.InvalidNameException;
 import com.jspiders.taskapi.services.AppUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +22,8 @@ public class AppUserServiceImpl implements AppUserService
         System.out.println("name : "+createUserRequest.getName());
 
         //validate
-         validateName(createUserRequest);
-         validateEmail(createUserRequest);
+//       validateName(createUserRequest);
+//       validateEmail(createUserRequest);
         //logics
 
         //save data to database
