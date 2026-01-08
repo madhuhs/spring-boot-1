@@ -1,5 +1,6 @@
 package com.jspiders.taskapi.errors;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -12,13 +13,13 @@ import java.util.List;
 import java.util.Map;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler
 {
     @ExceptionHandler(ArithmeticException.class)
     public ResponseEntity<String> arithmeticExceptionHandler(ArithmeticException ex)
     {
-        System.out.println("Handling ArithmeticException");
-        ex.printStackTrace();
+        log.error("Handling ArithmeticException ",ex);
        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong");
     }
 
@@ -69,6 +70,10 @@ public class GlobalExceptionHandler
 
             errorMap.put(field, errorMessage);
         }
+
+        log.error("Validation Error : {}",errorMap);
+
+
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMap);
     }

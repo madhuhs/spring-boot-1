@@ -4,6 +4,9 @@ import com.jspiders.taskapi.data.users.AppUser;
 import com.jspiders.taskapi.data.users.CreateUserRequest;
 import com.jspiders.taskapi.services.AppUserService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@Slf4j
 public class UserController
 {
     //immutable
@@ -25,13 +29,15 @@ public class UserController
     @PostMapping
     public ResponseEntity<String> addUser(@RequestBody @Valid CreateUserRequest createUserRequest)
     {
-        System.out.println("this is UserController --> addUser()");
+        log.info("inside addUser() createUserRequest : {}",createUserRequest);
         ResponseEntity<String> response = appUserService.createUser(createUserRequest);
+        log.info("inside addUser() : User created");
         return response;
     }
 
     @PutMapping
     public ResponseEntity<String> updateUser(){
+        log.info("updateUser()");
         System.out.println("this is UserController --> updateUser()");
         ResponseEntity<String> response = appUserService.updateUser();
         return response;

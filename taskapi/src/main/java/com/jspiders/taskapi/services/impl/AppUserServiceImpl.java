@@ -4,6 +4,7 @@ import com.jspiders.taskapi.data.users.AppUser;
 import com.jspiders.taskapi.data.users.CreateUserRequest;
 import com.jspiders.taskapi.errors.InvalidNameException;
 import com.jspiders.taskapi.services.AppUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,25 +13,20 @@ import java.util.List;
 
 //@Component
 @Service
+@Slf4j
 public class AppUserServiceImpl implements AppUserService
 {
     @Override
     public ResponseEntity<String> createUser(CreateUserRequest createUserRequest)
     {
-        System.out.println("this is AppUserServiceImpl --> createUser()");
-
-        System.out.println("name : "+createUserRequest.getName());
-
-        //validate
-//       validateName(createUserRequest);
-//       validateEmail(createUserRequest);
+       log.info("inside createUser() {}",createUserRequest);
         //logics
+
+        int x = 10 / 0;
 
         //save data to database
 
-
-//        ResponseEntity<String> response = ResponseEntity.ok("User created ");
-//        return response;
+        log.info("inside createUser() : User created");
          return ResponseEntity
                  .status(HttpStatus.CREATED)
                  .body("User created");
