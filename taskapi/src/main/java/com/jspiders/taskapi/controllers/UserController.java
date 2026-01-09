@@ -1,12 +1,12 @@
 package com.jspiders.taskapi.controllers;
 
 import com.jspiders.taskapi.data.users.AppUser;
+import com.jspiders.taskapi.data.users.AppUserDTO;
 import com.jspiders.taskapi.data.users.CreateUserRequest;
+import com.jspiders.taskapi.data.users.CreateUserResponse;
 import com.jspiders.taskapi.services.AppUserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +27,10 @@ public class UserController
     }
 
     @PostMapping
-    public ResponseEntity<String> addUser(@RequestBody @Valid CreateUserRequest createUserRequest)
+    public ResponseEntity<CreateUserResponse> addUser(@RequestBody @Valid CreateUserRequest createUserRequest)
     {
         log.info("inside addUser() createUserRequest : {}",createUserRequest);
-        ResponseEntity<String> response = appUserService.createUser(createUserRequest);
+        ResponseEntity<CreateUserResponse> response = appUserService.createUser(createUserRequest);
         log.info("inside addUser() : User created");
         return response;
     }
@@ -57,9 +57,9 @@ public class UserController
         return response;
     }
     @GetMapping("/{userId}")
-    ResponseEntity<AppUser> getUserById(@PathVariable Long userId){
-        System.out.println("this is UserController --> getUserById()");
-        ResponseEntity<AppUser> response = appUserService.getUserById(userId);
+    ResponseEntity<AppUserDTO> getUserById(@PathVariable Long userId){
+        log.info("getUserById()");
+        ResponseEntity<AppUserDTO> response = appUserService.getUserById(userId);
         return response;
     }
 }
