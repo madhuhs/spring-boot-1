@@ -73,16 +73,12 @@ public class AppUserServiceImpl implements AppUserService
         Collection<AppUser> values = userDb.values();
         List<AppUser> appUserList = new ArrayList<>(values);
         List<AppUserDTO> appUserDTOList = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
 
         //business logics(REMOVE PASSWORD DATA FROM RESPONSE)
         //build the response
         for (AppUser appUser:appUserList) {
-            AppUserDTO appUserDTO = new AppUserDTO();
-            appUserDTO.setName(appUser.getName());
-            appUserDTO.setEmail(appUser.getEmail());
-            appUserDTO.setMobile(appUser.getMobile());
-            appUserDTO.setUserId(appUser.getUserId());
-            appUserDTO.setActive(appUser.isActive());
+            AppUserDTO appUserDTO = mapper.convertValue(appUser, AppUserDTO.class);
             appUserDTOList.add(appUserDTO);
         }
 
