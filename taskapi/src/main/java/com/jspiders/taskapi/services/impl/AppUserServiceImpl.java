@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.*;
 
@@ -64,24 +65,31 @@ public class AppUserServiceImpl implements AppUserService
     }
 
     @Override
-    public ResponseEntity<List<AppUser>> getAllUsers()
+    public ResponseEntity<List<AppUserDTO>> getAllUsers()
     {
         System.out.println("this is AppUserServiceImpl --> getAllUsers()");
 
         //database ops (GET ALL USERS FROM DB)
         Collection<AppUser> values = userDb.values();
-        List<AppUser> users = new ArrayList<>(values);
+        List<AppUser> appUserList = new ArrayList<>(values);
+        List<AppUserDTO> appUserDTOList = new ArrayList<>();
 
         //business logics(REMOVE PASSWORD DATA FROM RESPONSE)
-
-
         //build the response
-
+        for (AppUser appUser:appUserList) {
+            AppUserDTO appUserDTO = new AppUserDTO();
+            appUserDTO.setName(appUser.getName());
+            appUserDTO.setEmail(appUser.getEmail());
+            appUserDTO.setMobile(appUser.getMobile());
+            appUserDTO.setUserId(appUser.getUserId());
+            appUserDTO.setActive(appUser.isActive());
+            appUserDTOList.add(appUserDTO);
+        }
 
         //return the response
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(users);
+                .body(appUserDTOList);
     }
 
     @Override
@@ -95,13 +103,16 @@ public class AppUserServiceImpl implements AppUserService
        AppUser appUser = userDb.get(userId);
 
         //build response object
-        AppUserDTO response = new AppUserDTO();
+//        AppUserDTO response = new AppUserDTO();
+//
+//        response.setName(appUser.getName());
+//        response.setEmail(appUser.getEmail());
+//        response.setMobile(appUser.getMobile());
+//        response.setUserId(appUser.getUserId());
+//        response.setActive(appUser.isActive());
 
-        response.setName(appUser.getName());
-        response.setEmail(appUser.getEmail());
-        response.setMobile(appUser.getMobile());
-        response.setUserId(appUser.getUserId());
-        response.setActive(appUser.isActive());
+        ObjectMapper mapper = new ObjectMapper();
+        AppUserDTO response = mapper.convertValue(appUser,AppUserDTO.class);
 
         //return response object
         return ResponseEntity
