@@ -1,11 +1,9 @@
 package com.jspiders.taskapi.services.impl;
 
-import com.jspiders.taskapi.data.users.AppUser;
-import com.jspiders.taskapi.data.users.AppUserDTO;
-import com.jspiders.taskapi.data.users.CreateUserRequest;
-import com.jspiders.taskapi.data.users.CreateUserResponse;
+import com.jspiders.taskapi.data.users.*;
 import com.jspiders.taskapi.errors.InvalidNameException;
 import com.jspiders.taskapi.services.AppUserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +15,15 @@ import java.util.*;
 //@Component
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class AppUserServiceImpl implements AppUserService
 {
     private static Map<Long,AppUser> userDb= new HashMap<>();
+    private final ObjectMapper mapper;
+
+    private final AppUserRepository appUserRepository;
+
+
     @Override
     public ResponseEntity<CreateUserResponse> createUser(CreateUserRequest createUserRequest)
     {
@@ -28,7 +32,13 @@ public class AppUserServiceImpl implements AppUserService
 
 
         //save data to database
-       Long userId = saveUser(createUserRequest);
+       //Long userId = saveUser(createUserRequest);
+       AppUser appUser  =  mapper.convertValue(createUserRequest,AppUser.class);
+       appUser.setActive(true);
+
+
+       AppUser appUser1 = appUserRepository.save(appUser);
+       Long userId = appUser1.getUserId();
 
        //build response object
         CreateUserResponse response = new CreateUserResponse();
@@ -73,7 +83,6 @@ public class AppUserServiceImpl implements AppUserService
         Collection<AppUser> values = userDb.values();
         List<AppUser> appUserList = new ArrayList<>(values);
         List<AppUserDTO> appUserDTOList = new ArrayList<>();
-        ObjectMapper mapper = new ObjectMapper();
 
         //business logics(REMOVE PASSWORD DATA FROM RESPONSE)
         //build the response
@@ -106,8 +115,6 @@ public class AppUserServiceImpl implements AppUserService
 //        response.setMobile(appUser.getMobile());
 //        response.setUserId(appUser.getUserId());
 //        response.setActive(appUser.isActive());
-
-        ObjectMapper mapper = new ObjectMapper();
         AppUserDTO response = mapper.convertValue(appUser,AppUserDTO.class);
 
         //return response object
