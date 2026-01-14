@@ -15,4 +15,5 @@ public interface AppUserService {
     ResponseEntity<String> deleteUser(String email,String mobile,String password);
     ResponseEntity<List<AppUserDTO>> getAllUsers();
     ResponseEntity<AppUserDTO> getUserById(Long userId);
+    ResponseEntity<AppUserDTO> getUserByEmail(String email);
 }

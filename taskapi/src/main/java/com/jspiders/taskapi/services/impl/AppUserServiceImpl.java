@@ -123,6 +123,11 @@ public class AppUserServiceImpl implements AppUserService
                 .body(response);
     }
 
+    @Override
+    public ResponseEntity<AppUserDTO> getUserByEmail(String email) {
+        return null;
+    }
+
     private void validateName(CreateUserRequest createUserRequest)
     {
         //Validation

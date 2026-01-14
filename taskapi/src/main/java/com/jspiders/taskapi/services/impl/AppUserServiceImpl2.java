@@ -85,4 +85,20 @@ public class AppUserServiceImpl2 implements AppUserService {
                 .status(HttpStatus.OK)
                 .body(response);
     }
+
+    @Override
+    public ResponseEntity<AppUserDTO> getUserByEmail(String email) {
+       Optional<AppUser> optional = appUserRepository.findByEmail(email);
+       AppUser appUser = optional.get();
+       AppUserDTO appUserDTO = mapper.convertValue(appUser, AppUserDTO.class);
+       log.info("appUserDTO {}",appUserDTO);
+        return ResponseEntity.ok().body(appUserDTO);
+    }
+
+
+
+
+
+
+
 }
