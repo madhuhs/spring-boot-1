@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 @Slf4j
@@ -36,7 +37,7 @@ public class GlobalExceptionHandler
     {
         System.out.println("Handling illegalArgumentException");
         ex.printStackTrace();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name cannot be blank/empty");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
     @ExceptionHandler(InvalidNameException.class)
@@ -73,8 +74,29 @@ public class GlobalExceptionHandler
 
         log.error("Validation Error : {}",errorMap);
 
-
-
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMap);
     }
+
+    @ExceptionHandler(DuplicateUserException.class)
+    public ResponseEntity<String> handleDuplicateUserException(DuplicateUserException ex)
+    {
+        log.error("Duplicate user ",ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException ex)
+    {
+        log.error("Data not found");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("DATA NOT FOUND");
+    }
+
 }
+
+
+
+
+
+
+
+

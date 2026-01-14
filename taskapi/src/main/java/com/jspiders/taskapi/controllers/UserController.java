@@ -5,6 +5,7 @@ import com.jspiders.taskapi.data.users.AppUserDTO;
 import com.jspiders.taskapi.data.users.CreateUserRequest;
 import com.jspiders.taskapi.data.users.CreateUserResponse;
 import com.jspiders.taskapi.services.AppUserService;
+import com.jspiders.taskapi.services.impl.AppUserServiceImpl2;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,9 @@ import java.util.List;
 public class UserController
 {
     //immutable
-    private final AppUserService appUserService;
+    private final AppUserServiceImpl2 appUserService;
     @Autowired
-    public UserController(AppUserService appUserService)
+    public UserController(AppUserServiceImpl2 appUserService)
     {
         this.appUserService = appUserService;
     }

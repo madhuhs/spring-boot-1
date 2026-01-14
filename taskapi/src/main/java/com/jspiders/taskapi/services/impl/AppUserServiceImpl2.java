@@ -1,17 +1,21 @@
 package com.jspiders.taskapi.services.impl;
 
 import com.jspiders.taskapi.data.users.*;
+import com.jspiders.taskapi.errors.DuplicateUserException;
 import com.jspiders.taskapi.services.AppUserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AppUserServiceImpl2 implements AppUserService {
 
     private final AppUserRepository appUserRepository;
@@ -19,6 +23,17 @@ public class AppUserServiceImpl2 implements AppUserService {
 
     @Override
     public ResponseEntity<CreateUserResponse> createUser(CreateUserRequest createUserRequest) {
+
+        //Data verification
+       boolean exists = appUserRepository.
+               existsByEmailOrMobile(createUserRequest.getEmail(),
+                createUserRequest.getMobile());
+
+       if(exists == true)
+       {
+           throw new DuplicateUserException("User with given email/mobile already exists");
+       }
+
 
         //Convert request to ENTITY
         AppUser appUser = mapper.convertValue(createUserRequest, AppUser.class);
@@ -58,6 +73,16 @@ public class AppUserServiceImpl2 implements AppUserService {
 
     @Override
     public ResponseEntity<AppUserDTO> getUserById(Long userId) {
-        return null;
+        log.info("getUserById()");
+        //perform db operations(GET USER FROM DB)
+        //AppUser appUser = userDb.get(userId);
+
+        Optional<AppUser> optional = appUserRepository.findById(userId);
+        AppUser appUser = optional.get();
+        AppUserDTO response = mapper.convertValue(appUser,AppUserDTO.class);
+        //return response object
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(response);
     }
 }
