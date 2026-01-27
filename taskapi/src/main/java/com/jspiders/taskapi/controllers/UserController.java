@@ -1,9 +1,6 @@
 package com.jspiders.taskapi.controllers;
 
-import com.jspiders.taskapi.data.users.AppUser;
-import com.jspiders.taskapi.data.users.AppUserDTO;
-import com.jspiders.taskapi.data.users.CreateUserRequest;
-import com.jspiders.taskapi.data.users.CreateUserResponse;
+import com.jspiders.taskapi.data.users.*;
 import com.jspiders.taskapi.services.AppUserService;
 import com.jspiders.taskapi.services.impl.AppUserServiceImpl2;
 import jakarta.validation.Valid;
@@ -69,5 +66,13 @@ public class UserController
         log.info("getUserByEmail()");
         ResponseEntity<AppUserDTO> response = appUserService.getUserByEmail(email);
         return response;
+    }
+
+    @PostMapping("/login")
+    ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest)
+    {
+        log.info("login()");
+       ResponseEntity<LoginResponse> response = appUserService.login(loginRequest);
+       return response;
     }
 }

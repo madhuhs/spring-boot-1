@@ -95,10 +95,31 @@ public class AppUserServiceImpl2 implements AppUserService {
         return ResponseEntity.ok().body(appUserDTO);
     }
 
+    @Override
+    public ResponseEntity<LoginResponse> login(LoginRequest loginRequest) {
+        log.info("inside login()");
+        String userId;
+        LoginResponse loginResponse;
+        //check if user with email and password exists in DB
+        boolean isPresent =  appUserRepository.existsByEmailAndPassword
+                             (loginRequest.getEmail(), loginRequest.getPassword());
 
+        if(isPresent==true)
+        {
+            //if user with email and password exists get userid
+           Optional<AppUser> userOptional = appUserRepository.findByEmail(loginRequest.getEmail());
+           AppUser appUser = userOptional.get();
+           loginResponse = mapper.convertValue(appUser, LoginResponse.class);
+           loginResponse.setMessage("Login success");
+           //userId = String.valueOf(appUser.getUserId());
+        }
+        else {
+            //if user with email and password DO NOT exists throw execption
+            throw new IllegalArgumentException("Invalid Username / Password");
+        }
 
-
-
-
+        //return userId of the given user
+        return ResponseEntity.ok(loginResponse);
+    }
 
 }

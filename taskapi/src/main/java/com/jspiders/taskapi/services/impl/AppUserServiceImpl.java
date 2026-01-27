@@ -128,6 +128,11 @@ public class AppUserServiceImpl implements AppUserService
         return null;
     }
 
+    @Override
+    public ResponseEntity<LoginResponse> login(LoginRequest loginRequest) {
+        return null;
+    }
+
     private void validateName(CreateUserRequest createUserRequest)
     {
         //Validation

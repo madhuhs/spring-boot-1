@@ -1,9 +1,6 @@
 package com.jspiders.taskapi.services;
 
-import com.jspiders.taskapi.data.users.AppUser;
-import com.jspiders.taskapi.data.users.AppUserDTO;
-import com.jspiders.taskapi.data.users.CreateUserRequest;
-import com.jspiders.taskapi.data.users.CreateUserResponse;
+import com.jspiders.taskapi.data.users.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -16,4 +13,5 @@ public interface AppUserService {
     ResponseEntity<List<AppUserDTO>> getAllUsers();
     ResponseEntity<AppUserDTO> getUserById(Long userId);
     ResponseEntity<AppUserDTO> getUserByEmail(String email);
+    ResponseEntity<LoginResponse> login(LoginRequest loginRequest);
 }
