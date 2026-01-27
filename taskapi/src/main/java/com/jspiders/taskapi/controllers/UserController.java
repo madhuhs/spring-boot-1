@@ -49,9 +49,11 @@ public class UserController
     }
 
     @GetMapping
-    ResponseEntity<List<AppUserDTO>> getAllUsers(){
-        System.out.println("this is UserController --> getAllUsers()");
-        ResponseEntity<List<AppUserDTO>> response = appUserService.getAllUsers();
+    ResponseEntity<List<AppUserDTO>> getAllUsers(@RequestHeader Long userId){
+       log.info("getAllUsers()");
+       log.info("userId {}",userId);
+
+        ResponseEntity<List<AppUserDTO>> response = appUserService.getAllUsers(userId);
         return response;
     }
     @GetMapping("/{userId}")

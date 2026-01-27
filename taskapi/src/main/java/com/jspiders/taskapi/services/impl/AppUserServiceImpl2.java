@@ -67,7 +67,14 @@ public class AppUserServiceImpl2 implements AppUserService {
     }
 
     @Override
-    public ResponseEntity<List<AppUserDTO>> getAllUsers() {
+    public ResponseEntity<List<AppUserDTO>> getAllUsers(Long userId) {
+        //verify the user
+       boolean isPresent = appUserRepository.existsById(userId);
+       if(isPresent==false)
+       {
+           throw new IllegalArgumentException("Security ERROR : USERID is not VALID");
+       }
+        //BL
         return null;
     }
 

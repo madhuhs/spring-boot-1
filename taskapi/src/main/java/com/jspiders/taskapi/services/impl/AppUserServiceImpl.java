@@ -75,7 +75,7 @@ public class AppUserServiceImpl implements AppUserService
     }
 
     @Override
-    public ResponseEntity<List<AppUserDTO>> getAllUsers()
+    public ResponseEntity<List<AppUserDTO>> getAllUsers(Long userId)
     {
         System.out.println("this is AppUserServiceImpl --> getAllUsers()");
 
