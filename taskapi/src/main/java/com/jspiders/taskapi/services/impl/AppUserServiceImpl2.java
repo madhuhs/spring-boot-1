@@ -146,4 +146,30 @@ public class AppUserServiceImpl2 implements AppUserService {
         return ResponseEntity.ok(loginResponse);
     }
 
+    @Override
+    public ResponseEntity<String> updateUserEmail(Long userId, UpdateUserEmailRequest updateUserEmailRequest) {
+        log.info("this is updateUserEmail()");
+        //verify the user
+        boolean isPresent = appUserRepository.existsById(userId);
+        if(isPresent==false)
+        {
+            throw new IllegalArgumentException("Security ERROR : USERID is not VALID");
+        }
+        Optional<AppUser> appUserOptional =
+                appUserRepository.findByEmailAndUserId(updateUserEmailRequest.getOldEmail()
+                ,updateUserEmailRequest.getUserId());
+
+        if(appUserOptional.isEmpty())
+        {
+            throw new IllegalArgumentException("User with given email and userid NOT FOUND");
+        }
+        else {
+            AppUser appUser = appUserOptional.get();
+            appUser.setEmail(updateUserEmailRequest.getNewEmail());
+            appUserRepository.save(appUser);
+        }
+
+        return ResponseEntity.ok("User email updated successfully");
+    }
+
 }

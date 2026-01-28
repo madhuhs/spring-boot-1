@@ -31,11 +31,11 @@ public class UserController {
         return response;
     }
 
-    @PutMapping
-    public ResponseEntity<String> updateUser() {
+    @PatchMapping
+    public ResponseEntity<String> updateUserEmail(@RequestHeader Long userId,
+                                             @RequestBody @Valid UpdateUserEmailRequest updateUserEmailRequest) {
         log.info("updateUser()");
-        System.out.println("this is UserController --> updateUser()");
-        ResponseEntity<String> response = appUserService.updateUser();
+        ResponseEntity<String> response = appUserService.updateUserEmail(userId,updateUserEmailRequest);
         return response;
     }
 
