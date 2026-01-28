@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,6 +70,7 @@ public class AppUserServiceImpl2 implements AppUserService {
 
     @Override
     public ResponseEntity<List<AppUserDTO>> getAllUsers(Long userId) {
+        log.info("this is getAllUsers()");
         //verify the user
        boolean isPresent = appUserRepository.existsById(userId);
        if(isPresent==false)
@@ -75,7 +78,21 @@ public class AppUserServiceImpl2 implements AppUserService {
            throw new IllegalArgumentException("Security ERROR : USERID is not VALID");
        }
         //BL
-        return null;
+        //database ops (GET ALL USERS FROM DB)
+        List<AppUser> appUserList = appUserRepository.findAll();
+        List<AppUserDTO> appUserDTOList = new ArrayList<>();
+
+        //business logics(REMOVE PASSWORD DATA FROM RESPONSE)
+        //build the response
+        for (AppUser appUser:appUserList) {
+            AppUserDTO appUserDTO = mapper.convertValue(appUser, AppUserDTO.class);
+            appUserDTOList.add(appUserDTO);
+        }
+
+        //return the response
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(appUserDTOList);
     }
 
     @Override
