@@ -1,6 +1,9 @@
 package com.jspiders.taskapi.data.users;
 
+import com.jspiders.taskapi.data.tasks.Task;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class AppUserDTO {
@@ -9,4 +12,5 @@ public class AppUserDTO {
     private String email;
     private String mobile;
     private boolean isActive;
+    private List<Task> taskList;
 }

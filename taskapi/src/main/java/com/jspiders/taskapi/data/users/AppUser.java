@@ -1,7 +1,10 @@
 package com.jspiders.taskapi.data.users;
 
+import com.jspiders.taskapi.data.tasks.Task;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -26,4 +29,7 @@ public class AppUser {
 
     @Column(name = "isActive",nullable = false)
     private boolean isActive;
+
+    @OneToMany(mappedBy = "appUser")
+    private List<Task> taskList;
 }

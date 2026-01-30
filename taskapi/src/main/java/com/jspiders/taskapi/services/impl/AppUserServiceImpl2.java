@@ -1,5 +1,7 @@
 package com.jspiders.taskapi.services.impl;
 
+import com.jspiders.taskapi.data.tasks.Task;
+import com.jspiders.taskapi.data.tasks.TaskRepository;
 import com.jspiders.taskapi.data.users.*;
 import com.jspiders.taskapi.errors.DuplicateUserException;
 import com.jspiders.taskapi.services.AppUserService;
@@ -21,6 +23,7 @@ import java.util.Optional;
 public class AppUserServiceImpl2 implements AppUserService {
 
     private final AppUserRepository appUserRepository;
+    private final TaskRepository taskRepository;
     private final ObjectMapper mapper;
 
     @Override
@@ -104,6 +107,10 @@ public class AppUserServiceImpl2 implements AppUserService {
         Optional<AppUser> optional = appUserRepository.findById(userId);
         AppUser appUser = optional.get();
         AppUserDTO response = mapper.convertValue(appUser,AppUserDTO.class);
+
+        List<Task> taskList = taskRepository.findAll();
+
+        response.setTaskList(taskList);
         //return response object
         return ResponseEntity
                 .status(HttpStatus.OK)
