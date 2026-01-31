@@ -102,27 +102,28 @@ public class AppUserServiceImpl2 implements AppUserService {
     @Override
     public ResponseEntity<AppUserDTO> getUserById(Long userId) {
         log.info("getUserById()");
-        //perform db operations(GET USER FROM DB)
-        //AppUser appUser = userDb.get(userId);
+        //find the user by userId
+        AppUser appUser = appUserRepository.findById(userId).orElseThrow();
 
-        Optional<AppUser> optional = appUserRepository.findById(userId);
-        AppUser appUser = optional.get();
-        AppUserDTO response = mapper.convertValue(appUser,AppUserDTO.class);
+        //convert appuser to appuseDto
+        AppUserDTO appUserDTO = mapper.convertValue(appUser, AppUserDTO.class);
 
-        List<Task> taskList = taskRepository.findAll();
+        //find all the task of the user by userId
+        List<Task> taskList = taskRepository.findByAppUserUserId(userId);
         List<TaskDTO> taskDtoList = new ArrayList<>();
 
-        for (Task task:taskList) {
-          TaskDTO taskDTO =  mapper.convertValue(task,TaskDTO.class);
-          taskDtoList.add(taskDTO);
+        //convert task to taskdto
+        for (Task task:taskList)
+        {
+           TaskDTO taskDTO = mapper.convertValue(task,TaskDTO.class);
+           taskDtoList.add(taskDTO);
         }
-
-        response.setTaskList(taskDtoList);
-
+        //set the taskDto list
+        appUserDTO.setTaskList(taskDtoList);
         //return response object
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(response);
+                .body(appUserDTO);
     }
 
     @Override
