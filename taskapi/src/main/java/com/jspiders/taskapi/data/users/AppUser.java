@@ -1,12 +1,15 @@
 package com.jspiders.taskapi.data.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jspiders.taskapi.data.tasks.Task;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
 @Data
+@ToString(exclude ="taskList")
 @Entity
 @Table(name = "appusers")
 public class AppUser {
@@ -31,5 +34,7 @@ public class AppUser {
     private boolean isActive;
 
     @OneToMany(mappedBy = "appUser")
+    @JsonIgnore
     private List<Task> taskList;
+
 }

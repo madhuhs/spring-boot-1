@@ -1,8 +1,10 @@
 package com.jspiders.taskapi.data.tasks;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jspiders.taskapi.data.users.AppUser;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -31,4 +33,15 @@ public class Task {
     @JoinColumn(name = "userId")
     private AppUser appUser;
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId=" + taskId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                '}';
+    }
 }

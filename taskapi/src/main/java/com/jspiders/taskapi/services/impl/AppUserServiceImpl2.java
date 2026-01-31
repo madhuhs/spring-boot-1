@@ -1,6 +1,7 @@
 package com.jspiders.taskapi.services.impl;
 
 import com.jspiders.taskapi.data.tasks.Task;
+import com.jspiders.taskapi.data.tasks.TaskDTO;
 import com.jspiders.taskapi.data.tasks.TaskRepository;
 import com.jspiders.taskapi.data.users.*;
 import com.jspiders.taskapi.errors.DuplicateUserException;
@@ -109,8 +110,15 @@ public class AppUserServiceImpl2 implements AppUserService {
         AppUserDTO response = mapper.convertValue(appUser,AppUserDTO.class);
 
         List<Task> taskList = taskRepository.findAll();
+        List<TaskDTO> taskDtoList = new ArrayList<>();
 
-        response.setTaskList(taskList);
+        for (Task task:taskList) {
+          TaskDTO taskDTO =  mapper.convertValue(task,TaskDTO.class);
+          taskDtoList.add(taskDTO);
+        }
+
+        response.setTaskList(taskDtoList);
+
         //return response object
         return ResponseEntity
                 .status(HttpStatus.OK)
