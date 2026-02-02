@@ -1,10 +1,13 @@
 package com.jspiders.taskapi.data.tasks;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jspiders.taskapi.data.tags.Tags;
 import com.jspiders.taskapi.data.users.AppUser;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -32,6 +35,12 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "userId")
     private AppUser appUser;
+
+    @ManyToMany
+    @JoinTable(name = "task_tags_ids",
+               joinColumns = @JoinColumn(name = "taskId"),
+               inverseJoinColumns = @JoinColumn(name = "tagId"))
+    private Set<Tags> tags = new HashSet<>();
 
     @Override
     public String toString() {
